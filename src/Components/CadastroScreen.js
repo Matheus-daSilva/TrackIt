@@ -23,7 +23,7 @@ export default function CadastroScreen() {
             console.log(data);
             navigate("/");
         });
-        promisse.catch(warning());
+        promisse.catch(warning);
     }
 
     function warning() {

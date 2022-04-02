@@ -2,3 +2,7 @@
     box-sizing: border-box;
     font-family: 'Lexend Deca';
 }
+
+body {
+    background-color: #E5E5E5;
+}
