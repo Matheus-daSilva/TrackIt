@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from 'styled-components';
 
 export default function Days(props) {
-    const { day, id, pickDay, setPickDay } = props;
+    const { day, id, pickDay, setPickDay, setHabit, habit } = props;
     const [validation, setValidation] = useState(false);
     const grey = '#CFCFCF'
     const white = '#FFFFFF'
@@ -22,6 +22,7 @@ export default function Days(props) {
     if (!validation) {
         return (
             <Day background={white} color={grey} onClick={() => {
+                setHabit({ ...habit, days: pickDay })
                 setValidation(true);
                 addDay();
             }}>
@@ -31,6 +32,7 @@ export default function Days(props) {
     } else {
         return (
             <Day background={grey} color={white} onClick={() => {
+                setHabit({ ...habit, days: pickDay })
                 setValidation(false);
                 removeDay(id);
             }}>
@@ -45,7 +47,6 @@ width: 30px;
 height: 30px;
 background-color: ${props => props.background};
 border: 1px solid #D5D5D5;
-box-sizing: border-box;
 border-radius: 5px;
 font-family: 'Lexend Deca';
 font-style: normal;

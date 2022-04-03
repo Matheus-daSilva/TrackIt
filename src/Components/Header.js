@@ -13,19 +13,20 @@ export default function Header(){
 
 const Top = styled.header`
 position: fixed;
-width: 375px;
+width: 100%;
 height: 70px;
 left: 0px;
 top: 0px;
 right: 0px;
-display: flex:
+z-index: 3;
+display: flex;
+justify-content: space-between;
 align-items: center;
 background: #126BA5;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
 h2 {
     margin-left: 18px;
-    margin-top: 10px;
     font-family: 'Playball', cursive;
     font-style: normal;
     font-weight: 400;
@@ -37,8 +38,7 @@ h2 {
 img {
     width: 51px;
     height: 51px;
-    margin-top: 10px;
-    margin-left: 191px;
+    margin-right: 9px;
     border-radius: 98.5px;
 }
 `

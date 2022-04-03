@@ -22,6 +22,7 @@ height: 70px;
 left: 0px;
 right: 0px;
 bottom: 0px;
+z-index: 3;
 background: #FFFFFF;
 display: flex;
 justify-content: space-around;

@@ -5,9 +5,11 @@ import axios from "axios";
 import Footer from "./Footer";
 import Header from "./Header";
 import Days from "./Days";
+import Habits from "./Habits";
 
 export default function HabitosScreen() {
-    const { token } = useToken()
+    const { token } = useToken();
+    const [status, setStatus] = useState(0);
     const [items, setItems] = useState([]);
     const [pickDay, setPickDay] = useState([]);
     const [add, setAdd] = useState(false);
@@ -16,7 +18,20 @@ export default function HabitosScreen() {
             Authorization: `Bearer ${token}`
         }
     }
-    const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const days = [
+        { domingo: 'D' },
+        { segunda: 'S' },
+        { terca: 'T' },
+        { quarta: 'Q' },
+        { quinta: 'Q' },
+        { sexta: 'S' },
+        { sabado: 'S' }
+    ];
+    const [habit, setHabit] = useState({
+        name: "",
+        days: ""
+    });
+    console.log(habit)
     const blue = '#52B6FF';
     const white = '#FFFFFF';
 
@@ -24,23 +39,106 @@ export default function HabitosScreen() {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
         promisse.then(response => {
             const { data } = response;
-            setItems(data)
+            setItems(data);
         });
         promisse.catch(warning);
-    }, [])
+    }, [status])
 
     function warning() {
         alert("Ops, tente novamente");
     }
 
-    if (Object.values(items).length > 0) {
+    function addHabito() {
+        const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config);
+        request.then(() => {
+            setAdd(false)
+            setStatus(status + 1);
+            setPickDay([]);
+            setHabit({
+                name: "",
+                days: ""
+            });
+        });
+        request.catch(warning);
+    }
+
+    if (Object.values(items).length > 0 && !add) {
         return (
             <>
                 <Header />
+                <Section>
+                    <Div>
+                        <h3>Meus hábitos</h3>
+                        <p onClick={() => {
+                            setAdd(true);
+                            
+                        }}>+</p>
+                    </Div>
+                    {items.map(item => {
+                        return (
+                            <Habits
+                                key={"habits" + item.id}
+                                name={item.name}
+                                APIDays={item.days}
+                                days={days}
+                            />
+                        )
+                    })}
+                </Section>
                 <Footer />
             </>
         );
     }
+
+    if (Object.values(items).length > 0 && add) {
+        return (
+            <>
+                <Header />
+                <Section>
+                    <Div>
+                        <h3>Meus hábitos</h3>
+                        <p>+</p>
+                    </Div>
+                    <Habito>
+                        <input type="text" placeholder='nome do hábito' onChange={e => setHabit({ ...habit, name: e.target.value })}></input>
+                        <WeekDays>
+                            {days.map(day => {
+                                return (
+                                    <Days
+                                        key={days.indexOf(day)}
+                                        day={Object.values(day)}
+                                        id={days.indexOf(day)}
+                                        setPickDay={setPickDay}
+                                        pickDay={pickDay}
+                                        habit={habit}
+                                        setHabit={setHabit} />
+                                )
+                            })}
+                        </WeekDays>
+                        <Buttons>
+                            <Button color={blue} background={white} border={white} onClick={() => setAdd(false)}>Cancelar</Button>
+                            <Button color={white} background={blue} border={blue} onClick={() => {
+                                setStatus(status + 1);
+                                addHabito()
+                            }}>Salvar</Button>
+                        </Buttons>
+                    </Habito>
+                    {items.map(item => {
+                        return (
+                            <Habits
+                                key={"habits" + item.id}
+                                name={item.name}
+                                APIDays={item.days}
+                                days={days}
+                            />
+                        )
+                    })}
+                </Section>
+                <Footer />
+            </>
+        );
+    }
+
     if (!add) {
         return (
             <>
@@ -48,7 +146,9 @@ export default function HabitosScreen() {
                 <Section>
                     <Div>
                         <h3>Meus hábitos</h3>
-                        <p onClick={() => setAdd(true)}>+</p>
+                        <p onClick={() => {
+                            setAdd(true);
+                        }}>+</p>
                     </Div>
                     <Text>
                         <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
@@ -69,17 +169,26 @@ export default function HabitosScreen() {
                         <p>+</p>
                     </Div>
                     <Habito>
-                        <input type="text" placeholder='nome do hábito'></input>
+                        <input type="text" placeholder='nome do hábito' onChange={e => setHabit({ ...habit, name: e.target.value })}></input>
                         <WeekDays>
                             {days.map(day => {
                                 return (
-                                    <Days day={day} id={days.indexOf(day) + 1} setPickDay={setPickDay} pickDay={pickDay}/>
+                                    <Days
+                                        key={days.indexOf(day)}
+                                        day={Object.values(day)}
+                                        id={days.indexOf(day)}
+                                        setPickDay={setPickDay}
+                                        pickDay={pickDay}
+                                        habit={habit}
+                                        setHabit={setHabit} />
                                 )
                             })}
                         </WeekDays>
                         <Buttons>
                             <Button color={blue} background={white} border={white} onClick={() => setAdd(false)}>Cancelar</Button>
-                            <Button color={white} background={blue} border={blue}>Salvar</Button>
+                            <Button color={white} background={blue} border={blue} onClick={() => {
+                                addHabito()
+                            }}>Salvar</Button>
                         </Buttons>
                     </Habito>
                     <Text>
@@ -94,6 +203,8 @@ export default function HabitosScreen() {
 
 const Section = styled.section`
 margin-top: 70px;
+margin-bottom: 70px;
+over-flow: scroll;
 width: 100%;
 display: flex;
 flex-direction: column;
