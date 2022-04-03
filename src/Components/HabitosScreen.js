@@ -77,10 +77,13 @@ export default function HabitosScreen() {
                     {items.map(item => {
                         return (
                             <Habits
-                                key={"habits" + item.id}
                                 name={item.name}
                                 APIDays={item.days}
                                 days={days}
+                                id={item.id}
+                                config={config}
+                                setStatus={setStatus}
+                                status={status}
                             />
                         )
                     })}
@@ -105,7 +108,6 @@ export default function HabitosScreen() {
                             {days.map(day => {
                                 return (
                                     <Days
-                                        key={days.indexOf(day)}
                                         day={Object.values(day)}
                                         id={days.indexOf(day)}
                                         setPickDay={setPickDay}
@@ -118,7 +120,6 @@ export default function HabitosScreen() {
                         <Buttons>
                             <Button color={blue} background={white} border={white} onClick={() => setAdd(false)}>Cancelar</Button>
                             <Button color={white} background={blue} border={blue} onClick={() => {
-                                setStatus(status + 1);
                                 addHabito()
                             }}>Salvar</Button>
                         </Buttons>
@@ -126,7 +127,6 @@ export default function HabitosScreen() {
                     {items.map(item => {
                         return (
                             <Habits
-                                key={"habits" + item.id}
                                 name={item.name}
                                 APIDays={item.days}
                                 days={days}

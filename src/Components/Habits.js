@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 import Trash from "./../assets/img/Trash.svg";
+import axios from "axios";
 
 export default function Habits(props) {
     const grey = '#CFCFCF'
     const white = '#FFFFFF'
-    const { name, APIDays, days } = props;
+    const { name, APIDays, days, id, config, setStatus, status } = props;
+
+    function deleteHabito() {
+        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
+        request.then(() => setStatus(status + 1));
+        request.catch(warning);
+    }
+
+    function warning() {
+        alert("Ops, tente novamente");
+    }
 
     return (
         <Section>
@@ -25,7 +36,7 @@ export default function Habits(props) {
                     })}
                 </WeekDay>
                 <TrashCan>
-                    <img src={Trash} alt="lixeira"></img>
+                    <img src={Trash} alt="lixeira" onClick={() => deleteHabito()}></img>
                 </TrashCan>
             </Habit>
         </Section>
