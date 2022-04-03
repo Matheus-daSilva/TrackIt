@@ -6,7 +6,7 @@ export default function Header(){
     return (
         <Top>
             <h2>TrackIt</h2>
-            <img src={image} />
+            <img src={image} alt="usuario"/>
         </Top>
     )
 }
