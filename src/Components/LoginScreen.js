@@ -45,7 +45,7 @@ export default function LoginScreen() {
             <img src={Logo} alt="Logo trackit" />
             <Form onSubmit={login}>
                 <input type="text" placeholder='email' onChange={e => setUserInfos({ ...userInfos, email: e.target.value })}></input>
-                <input type="text" placeholder='senha' onChange={e => setUserInfos({ ...userInfos, password: e.target.value })}></input>
+                <input type="password" placeholder='senha' onChange={e => setUserInfos({ ...userInfos, password: e.target.value })}></input>
                 <button>Entrar</button>
             </Form>
             <Link to="/cadastro">
@@ -57,7 +57,7 @@ export default function LoginScreen() {
             <img src={Logo} alt="Logo trackit" />
             <Form>
                 <input type="text" placeholder='email' onChange={e => setUserInfos({ ...userInfos, email: e.target.value })}></input>
-                <input type="text" placeholder='senha' onChange={e => setUserInfos({ ...userInfos, password: e.target.value })}></input>
+                <input type="password" placeholder='senha' onChange={e => setUserInfos({ ...userInfos, password: e.target.value })}></input>
                 <DivLoading>
                     <ThreeDots color="#FFFFFF" width={50} />
                 </DivLoading>

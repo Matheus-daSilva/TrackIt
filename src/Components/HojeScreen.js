@@ -5,26 +5,26 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useEffect, useState } from "react";
 import { useToken } from "../context/Token";
+import ToDoList from './ToDoList';
 
 export default function HojeScreen() {
     const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const [items, setItems] = useState([]);
+    const [validation, setValidation] = useState(0);
     const { token } = useToken();
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    console.log(items);
     useEffect(() => {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
         promisse.then(response => {
             const { data } = response;
             setItems(data);
-            console.log(data);
         });
         promisse.catch(warning);
-    }, [])
+    }, [validation, token])
 
     function warning() {
         alert("Ops, tente novamente");
@@ -44,6 +44,22 @@ export default function HojeScreen() {
                     })}
                 </Div>
                 <P>Nenhum hábito concluído ainda</P>
+                <List>
+                    {items.map(item => {
+                        return (
+                            <ToDoList 
+                            id={item.id} 
+                            name={item.name} 
+                            done={item.done} 
+                            currentSequence={item.currentSequence}
+                            highestSequence={item.highestSequence} 
+                            config={config}
+                            setValidation={setValidation}
+                            validation={validation}
+                            />
+                        )
+                    })}
+                </List>
             </Section>
             <Footer />
         </>
@@ -85,4 +101,10 @@ font-weight: 400;
 font-size: 17.976px;
 line-height: 22px;
 color: #BABABA;
+`
+
+const List = styled.div`
+margin-top: 28px;
+margin-bottom: 90px;
+overflow: scroll;
 `

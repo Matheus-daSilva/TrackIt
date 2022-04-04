@@ -55,12 +55,6 @@ export default function HabitosScreen() {
             request.then(() => {
                 setAdd(false)
                 setStatus(status + 1);
-                habit = {
-                    name: "",
-                    days: ""
-                };
-                console.log(habit);
-                console.log(pickDay);
                 setPickDay([]);
             });
             request.catch(warning);
