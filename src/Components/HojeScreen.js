@@ -56,6 +56,8 @@ export default function HojeScreen() {
                             config={config}
                             setValidation={setValidation}
                             validation={validation}
+                            items={items.length}
+                            itemsDone={items.filter((did) => did.done).length}
                             />
                         )
                     })}

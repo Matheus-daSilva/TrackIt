@@ -1,19 +1,22 @@
 import styled from 'styled-components';
 import axios from "axios";
-import { useState } from "react";
+import { useProgress } from "../context/Progress";
 import Check from "./../assets/img/Check.svg";
 
 
 export default function ToDoList(props) {
-    const { id, name, done, config, currentSequence, highestSequence, setValidation, validation } = props;
+    const { id, name, done, config, currentSequence, highestSequence, setValidation, validation, items, itemsDone } = props;
     const grey = "#E7E7E7";
     const green = "#8FC549";
     const something = {};
-
+    const { progress, setProgress } = useProgress();
+    setProgress(((itemsDone)/items) * 100);
     function check() {
         const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, something, config);
         promisse.then(() => setValidation(validation + 1));
         promisse.catch(warning);
+        setProgress(((itemsDone + 1)/items) * 100);
+        console.log(progress);
 
     }
 
@@ -21,6 +24,8 @@ export default function ToDoList(props) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, something, config);
         request.then(() => setValidation(validation + 1));
         request.catch(warning);
+        setProgress(((itemsDone - 1)/items) * 100);
+        console.log(progress);
     }
 
     function warning() {
