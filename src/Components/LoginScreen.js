@@ -5,8 +5,10 @@ import axios from 'axios';
 import Logo from "./../assets/img/Logo.png";
 import { useToken } from "../context/Token";
 import { useImage } from "../context/Image";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function LoginScreen() {
+    const [load, setLoad] = useState(false);
     const { setToken } = useToken();
     const { setImage } = useImage();
     const navigate = useNavigate();
@@ -17,6 +19,7 @@ export default function LoginScreen() {
 
     function login(event) {
         event.preventDefault(); 
+        setLoad(true);
         const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
         const promisse = axios.post(URL, userInfos);
         promisse.then(response => {
@@ -25,15 +28,19 @@ export default function LoginScreen() {
             setToken(data.token);
             setImage(data.image);
             navigate("/hoje");
+            setLoad(false);
         })
-        promisse.catch(warning)
+        promisse.catch(() => {
+            setLoad(false);
+            warning()
+        })
     }
 
     function warning() {
         alert('Não foi possível fazer o login');
     }
 
-    return (
+    return !load ? (
         <Section>
             <img src={Logo} alt="Logo trackit" />
             <Form onSubmit={login}>
@@ -45,7 +52,21 @@ export default function LoginScreen() {
                 <p>Não possui uma conta? Cadastre-se!</p>
             </Link>
         </Section>
-    );
+    ) : (
+        <Section>
+            <img src={Logo} alt="Logo trackit" />
+            <Form>
+                <input type="text" placeholder='email' onChange={e => setUserInfos({ ...userInfos, email: e.target.value })}></input>
+                <input type="text" placeholder='senha' onChange={e => setUserInfos({ ...userInfos, password: e.target.value })}></input>
+                <DivLoading>
+                    <ThreeDots color="#FFFFFF" width={50} />
+                </DivLoading>
+            </Form>
+            <Link to="/cadastro">
+                <p>Não possui uma conta? Cadastre-se!</p>
+            </Link>
+        </Section>
+    )
 }
 
 const Section = styled.div`
@@ -107,4 +128,14 @@ button {
     color: #FFFFFF;
 
 }
+`
+
+const DivLoading = styled.div`
+width: 303px;
+height: 45px;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #52B6FF;
+border-radius: 4.63636px;
 `

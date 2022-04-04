@@ -32,6 +32,7 @@ export default function HabitosScreen() {
         days: ""
     });
     console.log(habit)
+    console.log(pickDay);
     const blue = '#52B6FF';
     const white = '#FFFFFF';
 
@@ -53,11 +54,13 @@ export default function HabitosScreen() {
         request.then(() => {
             setAdd(false)
             setStatus(status + 1);
-            setPickDay([]);
             setHabit({
                 name: "",
                 days: ""
             });
+            console.log(habit);
+            setPickDay([]);
+            console.log(pickDay);
         });
         request.catch(warning);
     }
@@ -120,6 +123,7 @@ export default function HabitosScreen() {
                         <Buttons>
                             <Button color={blue} background={white} border={white} onClick={() => setAdd(false)}>Cancelar</Button>
                             <Button color={white} background={blue} border={blue} onClick={() => {
+                                setHabit({ ...habit, days: pickDay });
                                 addHabito()
                             }}>Salvar</Button>
                         </Buttons>
@@ -203,8 +207,8 @@ export default function HabitosScreen() {
 
 const Section = styled.section`
 margin-top: 70px;
-margin-bottom: 70px;
-over-flow: scroll;
+margin-bottom: 90px;
+overflow: scroll;
 width: 100%;
 display: flex;
 flex-direction: column;

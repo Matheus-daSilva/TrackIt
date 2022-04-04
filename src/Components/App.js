@@ -5,6 +5,7 @@ import LoginScreen from './LoginScreen';
 import CadastroScreen from './CadastroScreen';
 import HojeScreen from './HojeScreen';
 import HabitosScreen from './HabitosScreen';
+import HistoricoScreen from './HistoricoScreen';
 
 export default function App() {
     return (
@@ -16,6 +17,7 @@ export default function App() {
                         <Route path="/cadastro" element={<CadastroScreen />} />
                         <Route path="/hoje" element={<HojeScreen />} />
                         <Route path="/habitos" element={<HabitosScreen />} />
+                        <Route path="/historico" element={<HistoricoScreen />} />
                     </Routes>
                 </BrowserRouter>
             </TokenProvider>
