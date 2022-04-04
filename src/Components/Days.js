@@ -2,29 +2,27 @@ import { useState } from "react";
 import styled from 'styled-components';
 
 export default function Days(props) {
-    const { day, id, pickDay, setPickDay, setHabit, habit } = props;
+    const { day, id, pickDay, setPickDay } = props;
     const [validation, setValidation] = useState(false);
     const grey = '#CFCFCF'
     const white = '#FFFFFF'
 
     function addDay() {
-        setPickDay([...pickDay, id])
+        setPickDay([...pickDay, id]);
     }
 
     function removeDay(i) {
         const location = pickDay.indexOf(i);
         pickDay.splice(location, 1);
         setPickDay([...pickDay]);
-    }
+    } 
 
-    console.log(pickDay)
 
     if (!validation) {
         return (
             <Day background={white} color={grey} onClick={() => {
-                setHabit({ ...habit, days: pickDay })
-                setValidation(true);
                 addDay();
+                setValidation(true);
             }}>
                 {day}
             </Day>
@@ -32,9 +30,8 @@ export default function Days(props) {
     } else {
         return (
             <Day background={grey} color={white} onClick={() => {
-                setHabit({ ...habit, days: pickDay })
-                setValidation(false);
                 removeDay(id);
+                setValidation(false);
             }}>
                 {day}
             </Day>

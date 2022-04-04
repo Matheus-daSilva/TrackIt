@@ -27,11 +27,12 @@ export default function HabitosScreen() {
         { sexta: 'S' },
         { sabado: 'S' }
     ];
-    const [habit, setHabit] = useState({
-        name: "",
-        days: ""
-    });
-    console.log(habit)
+    const [inputName, setInputName] = useState("");
+    const habit = {
+        name: inputName,
+        days: pickDay
+    };
+    console.log(habit);
     console.log(pickDay);
     const blue = '#52B6FF';
     const white = '#FFFFFF';
@@ -50,19 +51,20 @@ export default function HabitosScreen() {
     }
 
     function addHabito() {
-        const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config);
-        request.then(() => {
-            setAdd(false)
-            setStatus(status + 1);
-            setHabit({
-                name: "",
-                days: ""
+            const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', habit, config);
+            request.then(() => {
+                setAdd(false)
+                setStatus(status + 1);
+                habit = {
+                    name: "",
+                    days: ""
+                };
+                console.log(habit);
+                console.log(pickDay);
+                setPickDay([]);
             });
-            console.log(habit);
-            setPickDay([]);
-            console.log(pickDay);
-        });
-        request.catch(warning);
+            request.catch(warning);
+      
     }
 
     if (Object.values(items).length > 0 && !add) {
@@ -74,7 +76,7 @@ export default function HabitosScreen() {
                         <h3>Meus hábitos</h3>
                         <p onClick={() => {
                             setAdd(true);
-                            
+
                         }}>+</p>
                     </Div>
                     {items.map(item => {
@@ -106,7 +108,7 @@ export default function HabitosScreen() {
                         <p>+</p>
                     </Div>
                     <Habito>
-                        <input type="text" placeholder='nome do hábito' onChange={e => setHabit({ ...habit, name: e.target.value })}></input>
+                        <input type="text" placeholder='nome do hábito' onChange={e => setInputName(e.target.value)}></input>
                         <WeekDays>
                             {days.map(day => {
                                 return (
@@ -115,15 +117,13 @@ export default function HabitosScreen() {
                                         id={days.indexOf(day)}
                                         setPickDay={setPickDay}
                                         pickDay={pickDay}
-                                        habit={habit}
-                                        setHabit={setHabit} />
+                                         />
                                 )
                             })}
                         </WeekDays>
                         <Buttons>
                             <Button color={blue} background={white} border={white} onClick={() => setAdd(false)}>Cancelar</Button>
                             <Button color={white} background={blue} border={blue} onClick={() => {
-                                setHabit({ ...habit, days: pickDay });
                                 addHabito()
                             }}>Salvar</Button>
                         </Buttons>
@@ -173,7 +173,7 @@ export default function HabitosScreen() {
                         <p>+</p>
                     </Div>
                     <Habito>
-                        <input type="text" placeholder='nome do hábito' onChange={e => setHabit({ ...habit, name: e.target.value })}></input>
+                        <input type="text" placeholder='nome do hábito' onChange={e => setInputName(e.target.value)}></input>
                         <WeekDays>
                             {days.map(day => {
                                 return (
@@ -183,8 +183,7 @@ export default function HabitosScreen() {
                                         id={days.indexOf(day)}
                                         setPickDay={setPickDay}
                                         pickDay={pickDay}
-                                        habit={habit}
-                                        setHabit={setHabit} />
+                                         />
                                 )
                             })}
                         </WeekDays>

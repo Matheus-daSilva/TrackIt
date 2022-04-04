@@ -15,7 +15,7 @@ export default function HojeScreen() {
             Authorization: `Bearer ${token}`
         }
     }
-
+    console.log(items);
     useEffect(() => {
         const promisse = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
         promisse.then(response => {
@@ -57,7 +57,6 @@ flex-direction: column;
 align-items: center;
 margin-top: 70px;
 margin-bottom: 70px;
-overflow: scroll;
 `
 
 const Div = styled.div`
