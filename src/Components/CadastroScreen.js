@@ -86,6 +86,10 @@ input {
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
+    color: black;
+}
+
+input::placeholder {
     color: #DBDBDB;
 }
 

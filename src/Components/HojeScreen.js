@@ -149,5 +149,5 @@ color: ${props => props.color};
 const List = styled.div`
 margin-top: 28px;
 margin-bottom: 90px;
-overflow: scroll;
+overflow-y: scroll;
 `

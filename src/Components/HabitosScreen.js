@@ -201,7 +201,7 @@ export default function HabitosScreen() {
 const Section = styled.section`
 margin-top: 70px;
 margin-bottom: 90px;
-overflow: scroll;
+overflow-y: scroll;
 width: 100%;
 display: flex;
 flex-direction: column;

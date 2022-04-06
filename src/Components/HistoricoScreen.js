@@ -19,7 +19,6 @@ export default function HistoricoScreen() {
 
 const Section = styled.section`
 margin-top: 70px;
-overflow: scroll;
 width: 100%;
 display: flex;
 flex-direction: column;
